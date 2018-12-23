@@ -3,33 +3,37 @@ package smartleader.smartleader.Server;
 import android.os.Handler;
 import android.os.Message;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import smartleader.smartleader.Activity.LoginActivity;
 
 public class ServerLogin extends ServerConnection {
-    String Result;
+    public static final int LOGIN = 100;
+    public static final int LOGIN_OK = 101;
+    public static final int LOGIN_ALREADY_CONNECT = 102;
+    public static final int LOGIN_FAIL = 103;
+
 
     public ServerLogin(Handler handler) {
         super(handler);
     }
 
-    @Override
-    public void run() {
-        super.run();
-        if(writer!=null){
-            sendData();
-        }
-        if(reader!=null){
-            receiveData();
-        }
-    }
+
 
     @Override
-    void sendData() {
-        PrintWriter out = new PrintWriter(writer,true);
-        out.println(LoginActivity.LOGIN_OK);
+    void sendData() throws JSONException {
+
+        jsonObject.put("key", LOGIN);
+        /*
+         * Json에 정보 담는 작업 필요 -> 생성자로 정보 보내주기 ^_^
+         */
+
+        PrintWriter out = new PrintWriter(writer, true);
+        out.println(jsonObject);
+
     }
 
     @Override
@@ -38,22 +42,28 @@ public class ServerLogin extends ServerConnection {
             @Override
             public void run() {
 
-                Message msg = handler.obtainMessage();
                 try {
                     Result = reader.readLine();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                if(Result.equals("2")){
-                    msg.what = LoginActivity.LOGIN_FAIL;
+                switch (Integer.parseInt(Result)) {
+                    case LOGIN_OK:
+                        msg.what = LOGIN_OK;
+                        break;
+                    case LOGIN_ALREADY_CONNECT:
+                        msg.what = LOGIN_ALREADY_CONNECT;
+                        break;
+                    case LOGIN_FAIL:
+                        msg.what = LOGIN_FAIL;
+                        break;
                 }
-                if(Result.equals("1")){
-                    msg.what = LoginActivity.LOGIN_OK;
-                }
+
                 handler.sendMessage(msg);
             }
         });
         receiveThread.start();
     }
+
 }

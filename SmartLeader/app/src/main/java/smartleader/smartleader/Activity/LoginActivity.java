@@ -12,16 +12,14 @@ import android.widget.Toast;
 
 import smartleader.smartleader.R;
 import smartleader.smartleader.Server.ServerLogin;
+import smartleader.smartleader.ServerThreadHandler.ServerHandler;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
-    public static final int LOGIN_FAIL = 0;
-    public static final int LOGIN_OK=1;
     private EditText id;
     private EditText password;
-    private Button login_Btn;
-    private Button sign_in_Btn;
 
     private Handler handler;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,54 +27,40 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         findView();
         HandlerSetting();
     }
-    private void findView(){
+
+    private void findView() {
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
-        login_Btn = findViewById(R.id.login_btn);
-        sign_in_Btn = findViewById(R.id.sign_in_btn);
     }
-    public LoginActivity(){
 
+    private void HandlerSetting() {
+        handler = new ServerHandler(this);
     }
-    private void HandlerSetting(){
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what) {
-                    case LOGIN_FAIL:
-                        Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
-                        break;
-                    case LOGIN_OK:
-                        Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        };
 
-    }
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.login_btn :login();
+        switch (v.getId()) {
+            case R.id.login_btn:
+                login();
                 break;
-            case R.id.sign_in_btn :
+            case R.id.sign_in_btn:
+                sign_in();
                 break;
         }
     }
-    void login(){
-        if(id.getText().toString().equals("") && password.getText().toString().equals("")){
-            Toast.makeText(getApplicationContext(),"정보를 입력하시오.",Toast.LENGTH_SHORT).show();
+
+    void login() {
+
+        if (id.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "ID를 입력하시오.", Toast.LENGTH_SHORT).show();
+        } else if (password.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "PW를 입력하시오.", Toast.LENGTH_SHORT).show();
+        } else {
+            new ServerLogin(handler).start();
         }
-        if(id.getText().toString().equals("")){
-            Toast.makeText(getApplicationContext(),"ID를 입력하시오.",Toast.LENGTH_SHORT).show();
-        }
-        if(password.getText().toString().equals("")){
-            Toast.makeText(getApplicationContext(),"PW를 입력하시오.",Toast.LENGTH_SHORT).show();
-        }
-        if(!id.getText().toString().equals("") && !password.getText().toString().equals("")){
-            ServerLogin serverLogin = new ServerLogin(handler);
-            serverLogin.start();
-        }
+    }
+
+    void sign_in() {
+
     }
 }
