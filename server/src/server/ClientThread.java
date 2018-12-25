@@ -23,13 +23,17 @@ public class ClientThread extends Thread{
 		try {
 			reader = new BufferedReader (new InputStreamReader(client.getInputStream(),"UTF-8"));
 			result = reader.readLine();
+			
+			System.out.println(result);
 			writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(client.getOutputStream(),"UTF-8")),true);
 			
-			if(result.equals("1")) {
+			if(result.equals("100")) {
 				writer.println(LOGIN_OK);	
+				System.out.println(LOGIN_OK);
 			}
 			else {
-				writer.println(LOGIN_FAIL);
+				writer.println(101);
+				System.out.println("Àü¼Û¶ì");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

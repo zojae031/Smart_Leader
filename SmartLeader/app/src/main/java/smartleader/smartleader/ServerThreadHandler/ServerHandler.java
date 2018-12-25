@@ -1,10 +1,12 @@
 package smartleader.smartleader.ServerThreadHandler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import smartleader.smartleader.Activity.MainActivity;
 import smartleader.smartleader.Server.ServerConnection;
 import smartleader.smartleader.Server.ServerLogin;
 import smartleader.smartleader.Server.Server_State_Check;
@@ -27,6 +29,8 @@ public class ServerHandler extends Handler {
                 Toast.makeText(context, "서버가 닫혀있습니다.", Toast.LENGTH_SHORT).show();
                 break;
             case ServerLogin.LOGIN_OK:
+                Intent intent = new Intent(context,MainActivity.class);
+                context.startActivity(intent);
                 break;
             case ServerLogin.LOGIN_ALREADY_CONNECT:
                 break;

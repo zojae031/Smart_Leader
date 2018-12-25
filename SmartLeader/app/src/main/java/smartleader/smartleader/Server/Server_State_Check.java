@@ -34,6 +34,7 @@ public class Server_State_Check extends ServerConnection {
             public void run() {
                 try {
                     Result = reader.readLine();
+                    closeSocket();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

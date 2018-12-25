@@ -1,14 +1,11 @@
 package smartleader.smartleader.Server;
 
 import android.os.Handler;
-import android.os.Message;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import smartleader.smartleader.Activity.LoginActivity;
 
 public class ServerLogin extends ServerConnection {
     public static final int LOGIN = 100;
@@ -20,7 +17,6 @@ public class ServerLogin extends ServerConnection {
     public ServerLogin(Handler handler) {
         super(handler);
     }
-
 
 
     @Override
@@ -44,6 +40,7 @@ public class ServerLogin extends ServerConnection {
 
                 try {
                     Result = reader.readLine();
+                    closeSocket();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -61,6 +58,7 @@ public class ServerLogin extends ServerConnection {
                 }
 
                 handler.sendMessage(msg);
+
             }
         });
         receiveThread.start();

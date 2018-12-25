@@ -14,6 +14,8 @@ import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import smartleader.smartleader.AppManager;
+
 /*
  * 서버 연결을 위한 최 상위클래스 ServerConnection Thread
  * 서버에 대한 기본 연결과 Handler 를 정의한다.
@@ -23,7 +25,7 @@ public abstract class ServerConnection extends Thread {
     public static final int SERVER_CONNECT_ERROR = 999;
 
     //Server Information
-    private String SERVER_ID = "172.30.1.22";
+    private String SERVER_ID = "192.168.0.16";
     private int port = 5050;
 
     //Server Connect
@@ -40,6 +42,10 @@ public abstract class ServerConnection extends Thread {
     String Result;
 
     public ServerConnection(Handler handler) {
+        //추후 삭제부분 <-> LoginActivity
+        if(!AppManager.getInstance().getServerIp().equals("")){
+            SERVER_ID = AppManager.getInstance().getServerIp();
+        }
         //Constructor basic handler setting
         this.handler = handler;
         msg = handler.obtainMessage();
@@ -56,7 +62,7 @@ public abstract class ServerConnection extends Thread {
 
             sendData();
             receiveData();
-            closeSocket();
+
 
         } catch (IOException e) {
             e.printStackTrace();
