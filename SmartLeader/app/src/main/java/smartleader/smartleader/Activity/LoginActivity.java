@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import smartleader.smartleader.AppManager;
+import smartleader.smartleader.Model.UserVO;
 import smartleader.smartleader.R;
 import smartleader.smartleader.Server.ServerLogin;
 import smartleader.smartleader.ServerThreadHandler.ServerHandler;
@@ -39,8 +40,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void findView() {
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
-
-
     }
 
     private void HandlerSetting() {
@@ -77,7 +76,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         } else if (password.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "PW를 입력하시오.", Toast.LENGTH_SHORT).show();
         } else {
-            new ServerLogin(AppManager.getInstance().getHandler()).start();
+            new ServerLogin(AppManager.getInstance().getHandler(),new UserVO(id.getText().toString(),password.getText().toString())).start();
         }
     }
 

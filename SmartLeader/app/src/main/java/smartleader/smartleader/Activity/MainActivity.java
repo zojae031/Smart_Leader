@@ -2,6 +2,7 @@ package smartleader.smartleader.Activity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,12 +10,13 @@ import android.widget.Toast;
 
 import smartleader.smartleader.AppManager;
 import smartleader.smartleader.BeaconService.BeaconService;
+import smartleader.smartleader.Model.UserVO;
 import smartleader.smartleader.R;
 import smartleader.smartleader.Server.ServerLogout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     BluetoothAdapter bluetoothAdapter;
-
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +48,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.logout : new ServerLogout(AppManager.getInstance().getHandler()).start();
+            case R.id.logout : logout();
                 break;
             case R.id.manager :
                 break;
         }
+    }
+    private void logout(){
+        preferences = getSharedPreferences("data",MODE_PRIVATE);
+        String id = preferences.getString("id","");
+        new ServerLogout(AppManager.getInstance().getHandler(),new UserVO(id)).start();
     }
 }

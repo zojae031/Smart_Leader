@@ -8,19 +8,23 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import smartleader.smartleader.Model.UserVO;
+
 public class ServerLogout extends ServerConnection {
     public static final int LOGOUT = 200;
     public static final int LOGOUT_OK = 201;
     public static final int LOGOUT_FAIL = 202;
 
-    public ServerLogout(Handler handler) {
+    private UserVO userVO;
+    public ServerLogout(Handler handler,UserVO userVO) {
         super(handler);
+        this.userVO = userVO;
     }
 
     @Override
     void sendData() throws JSONException {
         jsonObject.put("key", LOGOUT);
-
+        jsonObject.put("id",userVO.getId());
         PrintWriter out = new PrintWriter(writer, true);
         out.println(jsonObject);
     }
