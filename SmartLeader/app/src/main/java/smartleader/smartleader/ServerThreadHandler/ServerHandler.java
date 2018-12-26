@@ -39,8 +39,10 @@ public class ServerHandler extends Handler {
             //100 LOGIN
             case ServerLogin.LOGIN_OK:
                 login_ok(msg);
+                startMainAct();
                 break;
             case ServerLogin.LOGIN_ALREADY_CONNECT:
+                Toast.makeText(context,"이미 로그인 중 입니다.",Toast.LENGTH_SHORT).show();
                 break;
             case ServerLogin.LOGIN_FAIL:
                 Toast.makeText(context, "정보가 틀렸습니다.", Toast.LENGTH_SHORT).show();
@@ -57,20 +59,24 @@ public class ServerHandler extends Handler {
                 break;
             //300 STATE_CHECK
             case Server_State_Check.STATE_LOGIN:
+                startMainAct();
                 break;
-            case Server_State_Check.STATE_LOGOUT:
+            case Server_State_Check.STATE_NOT_LOGIN:
+                //DO NOTHING
                 break;
         }
     }
 
-    private void login_ok(Message msg) {
+    private void startMainAct(){
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        context.startActivity(intent);
+    }
+    private void login_ok(Message msg) {
         preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
         editor = preferences.edit();
         editor.putString("id", ((UserVO) msg.obj).getId());
         editor.commit();
-        context.startActivity(intent);
     }
     private void logout_ok(){
         preferences = context.getSharedPreferences("data",Context.MODE_PRIVATE);

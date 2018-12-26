@@ -25,7 +25,7 @@ public abstract class ServerConnection extends Thread {
     public static final int SERVER_CONNECT_ERROR = 999;
 
     //Server Information
-    private String SERVER_ID = "192.168.0.16";
+    private String SERVER_ID = "192.168.0.10";
     private int port = 5050;
 
     //Server Connect
@@ -39,7 +39,7 @@ public abstract class ServerConnection extends Thread {
 
     //Data Holder
     protected JSONObject jsonObject;
-    protected String Result;
+    protected String Result="";
 
     public ServerConnection(Handler handler) {
         //서버 IP 유동적 변경을 위한 부분 (입력받은 IP가 있다면 그것으로 변경한다)

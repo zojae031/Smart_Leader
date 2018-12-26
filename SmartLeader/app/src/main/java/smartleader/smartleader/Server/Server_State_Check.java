@@ -7,13 +7,16 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import smartleader.smartleader.Model.UserVO;
+
 public class Server_State_Check extends ServerConnection {
     public static final int STATE = 300;
     public static final int STATE_LOGIN = 301;
-    public static final int STATE_LOGOUT = 302;
-
-    public Server_State_Check(Handler handler) {
+    public static final int STATE_NOT_LOGIN = 302;
+    UserVO userVO;
+    public Server_State_Check(Handler handler, UserVO userVO) {
         super(handler);
+        this.userVO = userVO;
     }
 
 
@@ -21,7 +24,7 @@ public class Server_State_Check extends ServerConnection {
     void sendData() throws JSONException {
 
         jsonObject.put("key", STATE);
-
+        jsonObject.put("id",userVO.getId());
 
         PrintWriter out = new PrintWriter(writer, true);
         out.println(jsonObject);
@@ -42,8 +45,8 @@ public class Server_State_Check extends ServerConnection {
                     case STATE_LOGIN:
                         msg.what = STATE_LOGIN;
                         break;
-                    case STATE_LOGOUT:
-                        msg.what = STATE_LOGOUT;
+                    case STATE_NOT_LOGIN:
+                        msg.what = STATE_NOT_LOGIN;
                         break;
                 }
                 handler.sendMessage(msg);
