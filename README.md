@@ -4,5 +4,12 @@
 1. Crate Repository and Bulid Android FrameWork
 
 [ 2018_12_23 ]
-1. Handler ÀÛ¾÷
-2. Server Åë½Å ´ÙÇü¼º ±¸Çö
+1. Handler ì‘ì—…
+2. Server í†µì‹  ë‹¤í˜•ì„± êµ¬í˜„
+
+[ 2018_12_26 ]
+1. AppManager ì‘ì„± (by Singleton Pattern)
+ - Managing Activity Context
+ - Handler instance
+2. Logout ì •ì˜
+3. Beacon í†µì‹  (by estimate)
