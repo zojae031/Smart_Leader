@@ -25,11 +25,11 @@ public class Logout extends DBConnect implements DBConnectionInterface{
 		stat.setString(1, data.get("id").toString().replace("\"",""));
 		if(stat.executeUpdate()==0)
 		{
-			return_value = LOGIN_FAIL;
+			return_value = LOGOUT_FAIL;
 		}
-		return_value = LOGIN_OK;
+		return_value = LOGOUT_OK;
 		stat.close();
 		closeConnection();
 		return return_value;
-	}//·Î±×¾Æ¿ôÀÇ°æ¿ì ·Î±×ÀÎÀ» ÇÏ°í ³­ ÀÌÈÄ ·Î±×¾Æ¿ôÀÌ¹Ç·Î Ã¼Å©¸¦ µû·Î ÇÒ ÇÊ¿ä°¡ ¾ø´Ù.
+	}//ï¿½Î±×¾Æ¿ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î±×¾Æ¿ï¿½ï¿½Ì¹Ç·ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½.
 }

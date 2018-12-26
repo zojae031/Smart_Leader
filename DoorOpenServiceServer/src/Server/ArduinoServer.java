@@ -1,13 +1,11 @@
 package Server;
+
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
-
-
-public class UserServer implements Runnable{
-	public final int ServerPort = 5050;
+public class ArduinoServer implements Runnable {
+	public final int ServerPort = 5060;
 	ServerSocket serverSocket = null;  
 	InetAddress local;
 
@@ -29,7 +27,7 @@ public class UserServer implements Runnable{
 		} finally {
 			if (serverSocket != null) {
 				serverSocket.close();
-			}//������ ����������, ���μ����� ���� �ʴ´�.
+			}
 		}
 	}
 	@Override

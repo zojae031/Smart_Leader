@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import DataBases.DBConnectionInterface;
+import DataBases.DBConst;
 import DataBases.DBFactory;
 
 public class ClientThread extends Thread {
@@ -35,10 +36,10 @@ public class ClientThread extends Thread {
 		DBConnectionInterface i_db;
 		db = new DBFactory();
 		try {
-			reader = new BufferedReader(new InputStreamReader(client.getInputStream(),"UTF-8"));//ÇÑ±ÛÀ» ¹Þ±âÀ§ÇÑ UTF-8 ÁöÁ¤
+			reader = new BufferedReader(new InputStreamReader(client.getInputStream(),"UTF-8"));//ï¿½Ñ±ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ï¿½ï¿½ï¿½ï¿½ UTF-8 ï¿½ï¿½ï¿½ï¿½
 			JsonParser parser = new JsonParser();
 			JsonObject data = (JsonObject) parser.parse(reader.readLine());
-			System.out.println("ID,PW >> : " + data.get("id") + data.get("password"));//È®ÀÎÀ» À§ÇÑ System.out Â÷ÈÄ ÀÌ ÀÛ¾÷À» LOG¸¦ ÀÛ¼ºÇÏ´Â Class ¿´À¸¸é ÁÁ°Ú´Ù.
+			System.out.println("ID,PW >> : " + data.get("id") + data.get("password"));//È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ System.out ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ LOGï¿½ï¿½ ï¿½Û¼ï¿½ï¿½Ï´ï¿½ Class ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú´ï¿½.
 			i_db = db.factory(data);
 			writer = new PrintWriter(
 					new BufferedWriter(new OutputStreamWriter(client.getOutputStream(),"UTF-8")), true);
@@ -47,7 +48,7 @@ public class ClientThread extends Thread {
 			e.printStackTrace();
 		}finally {
 			try {
-				closeSocket();//¼ÒÄÏÀ» ´ÝÁö¾Ê´Â°æ¿ì ÇÁ·Î¼¼½º ÀÚÃ¼°¡ Á×Áö ¾Ê´Â´Ù.(¾²·¹µå ÀÛ¾÷À» ÅëÇØ¼­ ÀÛ¾÷ÇÏ±â ¶§¹®)
+				closeSocket();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ê´Â°ï¿½ï¿½ ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½.(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Û¾ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½)
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

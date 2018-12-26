@@ -21,10 +21,10 @@ public class Login extends DBConnect implements DBConnectionInterface {
 			return LOGIN_FAIL;		
 		int return_value=0;
 		boolean check;
-		check=login(data);//id¸¦ ·Î±×ÀÎÀ» ¼öÇàÇßÀ»¶§, Á¤»óÀûÀ¸·Î ¼öÇà µÇ¾ú´ÂÁö È®ÀÎÇÏ±â À§ÇÑ boolean°ª.
+		check=login(data);//idï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ booleanï¿½ï¿½.
 		if(!check)
 		{
-			return_value = checkerror(data);//Á¤»ó ¼öÇà µÇÁö ¾Ê¾ÒÀ»¶§, ¾î¶² ¹®Á¦·Î Á¤»ó ¼öÇàµÇÁö ¾Ê¾Ò´ÂÁö È®ÀÎÇÏ±â À§ÇÑ method
+			return_value = checkerror(data);//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½î¶² ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ method
 		}
 		else if(check)
 			return_value = LOGIN_OK;
@@ -40,20 +40,20 @@ public class Login extends DBConnect implements DBConnectionInterface {
 		res = stat.executeQuery();
 		if(res.next())
 		{
-			if(res.getInt("flag")== 1)//ÀÌ¹Ì ·Î±×ÀÎÀÌ µÇ¾îÀÖ´Â°æ¿ì
+			if(res.getInt("flag")== 1)//ï¿½Ì¹ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö´Â°ï¿½ï¿½
 			{
 				System.out.println("login already");
-				return_value = LOGIN_FAIL;
+				return_value = LOGIN_ALREADY_CONNECT;
 			}
-			else//ºñ¹Ð¹øÈ£°¡ Æ²¸°°æ¿ì
+			else//ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ Æ²ï¿½ï¿½ï¿½ï¿½ï¿½
 			{
 				System.out.println("password error");
-				return_value = NO_DATA;
+				return_value = LOGIN_FAIL;
 			}
 		}
-		else//id°¡ Á¸ÀçÇÏÁö ¾Ê´Â°æ¿ì
+		else//idï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â°ï¿½ï¿½
 		{
-			return_value = NO_DATA;
+			return_value = LOGIN_FAIL;
 		}
 		stat.close();
 		res.close();
@@ -66,7 +66,7 @@ public class Login extends DBConnect implements DBConnectionInterface {
 		stat = conn.prepareStatement(SIGNINSQL);
 		stat.setString(1, data.get("id").toString().replace("\"",""));
 		stat.setString(2, data.get("password").toString().replace("\"",""));
-		if(stat.executeUpdate()==0)//executeUpdate() ¸Þ¼ÒµåÀÇ °æ¿ì º¯°æµÈ rowÀÇ °ªÀ» ¸®ÅÏÇÑ´Ù. ÀÌ°ÍÀÌ 0 ÀÌ¶ó¸é, º¯°æµÈ °ªÀÌ ¾øÀ¸¹Ç·Î, login fales;
+		if(stat.executeUpdate()==0)//executeUpdate() ï¿½Þ¼Òµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ rowï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. ï¿½Ì°ï¿½ï¿½ï¿½ 0 ï¿½Ì¶ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½, login fales;
 		{
 			return_value = false;
 		}
