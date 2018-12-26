@@ -66,24 +66,6 @@
         app:srcCompat="@drawable/shakeimage" />
 
     <Button
-        android:id="@+id/manager"
-        android:layout_width="110dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button"
-        android:onClick="onClick"
-        android:text="관리자"
-        android:textColor="#666666"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logout"
-        app:layout_constraintVertical_bias="0.162" />
-
-    <Button
         android:id="@+id/info"
         android:layout_width="40dp"
         android:layout_height="40dp"
