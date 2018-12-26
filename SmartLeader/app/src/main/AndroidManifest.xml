@@ -11,9 +11,9 @@
     <application
 
         android:allowBackup="true"
-        android:icon="@mipmap/jaeho"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/jaeho"
+        android:roundIcon="@mipmap/appicon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar" >
         <activity android:name=".Activity.LoginActivity" >
@@ -24,8 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.MainActivity">
-
         </activity>
+        <activity android:name=".Activity.SignUpActivity"/>
+        <activity android:name=".Activity.SelectCompanyActivity"/>
         <service android:name=".BeaconService.BeaconService"
             android:process=".remote"
             >
