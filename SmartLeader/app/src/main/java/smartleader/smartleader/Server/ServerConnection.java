@@ -38,11 +38,11 @@ public abstract class ServerConnection extends Thread {
     protected Message msg;
 
     //Data Holder
-    JSONObject jsonObject;
-    String Result;
+    protected JSONObject jsonObject;
+    protected String Result;
 
     public ServerConnection(Handler handler) {
-        //추후 삭제부분 <-> LoginActivity
+        //서버 IP 유동적 변경을 위한 부분 (입력받은 IP가 있다면 그것으로 변경한다)
         if(!AppManager.getInstance().getServerIp().equals("")){
             SERVER_ID = AppManager.getInstance().getServerIp();
         }

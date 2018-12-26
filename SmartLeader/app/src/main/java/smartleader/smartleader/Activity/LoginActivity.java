@@ -4,10 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,9 +18,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText id;
     private EditText password;
 
-    private EditText ip;
-    private Button ipBtn;
-    private Handler handler;
+    private long lastTimePressed = 0;
 
     @Override
     protected void onResume() {
@@ -34,7 +30,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        AppManager.getInstance().setLoginActivity(this);
         checkingPermission();
         findView();
         HandlerSetting();
@@ -44,21 +40,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
 
-        //추후 삭제 부분 + AppManager
-        ip = findViewById(R.id.ip);
-        ipBtn = findViewById(R.id.ipbtn);
-        ipBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String ServerIp = ip.getText().toString();
-                AppManager.getInstance().setServerIp(ServerIp);
-            }
-        });
-        //추후 삭제 부분 <-> ServerConnection
+
     }
 
     private void HandlerSetting() {
-        handler = new ServerHandler(this);
+        AppManager.getInstance().setHandler(new ServerHandler(getApplicationContext()));
     }
 
     @Override
@@ -70,17 +56,28 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             case R.id.sign_in_btn:
                 sign_in();
                 break;
+            case R.id.copy :
+                if (System.currentTimeMillis() - lastTimePressed < 2000)
+                {
+                    String ServerIp = id.getText().toString();
+                    AppManager.getInstance().setServerIp(ServerIp);
+                    Toast.makeText(getApplicationContext(),"IP 재설정 완료",Toast.LENGTH_SHORT).show();
+                }
+                //lastTimeBackPressed에 '뒤로'버튼이 눌린 시간을 기록
+                lastTimePressed = System.currentTimeMillis();
+
+
+                break;
         }
     }
 
     void login() {
-
         if (id.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "ID를 입력하시오.", Toast.LENGTH_SHORT).show();
         } else if (password.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "PW를 입력하시오.", Toast.LENGTH_SHORT).show();
         } else {
-            new ServerLogin(handler).start();
+            new ServerLogin(AppManager.getInstance().getHandler()).start();
         }
     }
 

@@ -32,7 +32,7 @@ public class ClientThread extends Thread{
 				System.out.println(LOGIN_OK);
 			}
 			else {
-				writer.println(101);
+				writer.println(201);
 				System.out.println("Àü¼Û¶ì");
 			}
 		}catch(Exception e) {
