@@ -2,6 +2,7 @@ package smartleader.smartleader.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -82,7 +83,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     void sign_in() {
-
+        Intent intent = new Intent(getApplicationContext(),SignUpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void checkingPermission() {
