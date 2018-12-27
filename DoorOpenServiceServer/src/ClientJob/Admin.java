@@ -8,8 +8,8 @@ import com.google.gson.JsonObject;
 
 import DataBases.DBConnect;
 import DataBases.DBConnectionInterface;
-//ADMIN À¸·Î ·Î±×ÀÎÇßÀ»¶§ ½ÇÇàÇÏ´Â ·ÎÁ÷
-//¾Èµå·ÎÀÌµå¿¡¼­ ADMIN À» ÆÇº°ÇØ¼­ ¶ç¿ì´Â DISPLAY°¡ ´Ù¸£´Ù.
+//ADMIN ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+//ï¿½Èµï¿½ï¿½ï¿½Ìµå¿¡ï¿½ï¿½ ADMIN ï¿½ï¿½ ï¿½Çºï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ DISPLAYï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½.
 
 public class Admin extends DBConnect implements DBConnectionInterface {
 
@@ -18,13 +18,13 @@ public class Admin extends DBConnect implements DBConnectionInterface {
 	public Object excute(JsonObject data) throws SQLException {
 		// TODO Auto-generated method stub
 		int return_value;
-		if(insertvalue(data))//insert°¡ ¼º°øÇßÀ»¶§.
+		if(insertvalue(data))//insertï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 		{
-			return_value = SUCCESS;
+			return_value = SIGNUP_SUCCESS;
 		}
-		else//insert°¡ ¾È‰çÀ»¶§, »ç½Ç»ó ¾ÈµÇ´Â ÀÌÀ¯´Â ¾ø´Ù. (company.compay == company ÀÎ°æ¿ì º¯°æÇÏ°Ô µÈ´Ù.)
+		else//insertï¿½ï¿½ ï¿½È‰ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Ç»ï¿½ ï¿½ÈµÇ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. (company.compay == company ï¿½Î°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½È´ï¿½.)
 		{
-			return_value = LOGIN_FAIL;
+			return_value = SIGNUP_FAIL;
 		}
 		return return_value;
 	}
@@ -42,7 +42,7 @@ public class Admin extends DBConnect implements DBConnectionInterface {
 		stat = conn.prepareStatement(CHECKADMIN);
 		stat.setString(1,data.get("company").toString().replace("\"",""));
 		res = stat.executeQuery();
-		if(res.next())//¸¸¾à company.company °¡ °°Àº°Ô Á¸ÀçÇÑ´Ù¸é update¸¦ ¼öÇàÇÑ´Ù.
+		if(res.next())//ï¿½ï¿½ï¿½ï¿½ company.company ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´Ù¸ï¿½ updateï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		{
 			stat = conn.prepareStatement(ADMINUPDATE);		
 			stat.setString(4,data.get("company").toString().replace("\"",""));
@@ -56,7 +56,7 @@ public class Admin extends DBConnect implements DBConnectionInterface {
 			stat.setFloat(2,data.get("latitude").getAsFloat());
 			stat.setFloat(3,data.get("longitude").getAsFloat());
 			stat.setFloat(4,data.get("scope").getAsFloat());
-		}// ¾ø´Ù¸é insert ¼öÇà
+		}// ï¿½ï¿½ï¿½Ù¸ï¿½ insert ï¿½ï¿½ï¿½ï¿½
 		stat.executeQuery();
 		res.close();
 		stat.close();

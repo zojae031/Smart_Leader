@@ -39,10 +39,10 @@ public class ClientThread extends Thread {
 			reader = new BufferedReader(new InputStreamReader(client.getInputStream(),"UTF-8"));//�ѱ��� �ޱ����� UTF-8 ����
 			JsonParser parser = new JsonParser();
 			JsonObject data = (JsonObject) parser.parse(reader.readLine());
-			System.out.println("ID,PW >> : " + data.get("id") + data.get("password"));//Ȯ���� ���� System.out ���� �� �۾��� LOG�� �ۼ��ϴ� Class ������ ���ڴ�.
 			i_db = db.factory(data);
 			writer = new PrintWriter(
 					new BufferedWriter(new OutputStreamWriter(client.getOutputStream(),"UTF-8")), true);
+			System.out.println(data);
 			writer.println(i_db.excute(data));
 		} catch (Exception e) {
 			e.printStackTrace();
