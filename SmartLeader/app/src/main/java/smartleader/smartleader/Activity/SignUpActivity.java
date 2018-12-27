@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -14,7 +15,10 @@ import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
+import smartleader.smartleader.AppManager;
+import smartleader.smartleader.Model.UserVO;
 import smartleader.smartleader.R;
+import smartleader.smartleader.Server.Server_Id_Duplicate;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -105,6 +109,8 @@ public class SignUpActivity extends AppCompatActivity {
         user_name = name.getText().toString();
 
         if (user_name != null) {
+            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(user_name)).start();
+
             CONFIRM_NAME_OK = true;
         }
     }
