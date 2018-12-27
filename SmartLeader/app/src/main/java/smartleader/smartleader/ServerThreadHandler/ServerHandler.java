@@ -99,9 +99,7 @@ public class ServerHandler extends Handler {
                     .COMPANY_SUCCESS:
                 Intent intent = new Intent(context, SelectCompanyActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("data", (Serializable) msg.obj);
-                intent.putExtras(bundle);
+                intent.putExtra("data",msg.obj.toString());
                 AppManager.getInstance().getSignUpActivity().startActivityForResult(intent,SignUpActivity.REQUEST_CODE);
                 break;
         }
@@ -124,6 +122,7 @@ public class ServerHandler extends Handler {
         preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
         editor = preferences.edit();
         editor.remove("id");
+        editor.clear();
         editor.commit();
         context.stopService(new Intent(context, BeaconService.class));
         AppManager.getInstance().getMainActivity().finish();

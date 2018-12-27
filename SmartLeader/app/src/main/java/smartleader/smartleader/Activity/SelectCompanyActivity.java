@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import smartleader.smartleader.AppManager;
 import smartleader.smartleader.R;
@@ -76,8 +78,14 @@ public class SelectCompanyActivity extends Activity {
     }
 
     public void setList() {
-        Bundle bundle = getIntent().getExtras();
-        JsonArray jsonArray = (JsonArray) bundle.get("data");
+        Intent dataIntent = getIntent();
+        String jsonArray = dataIntent.getStringExtra("data");
+        try{
+            JSONArray array = new JSONArray(jsonArray);
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
 
         //서버에서 리스트 뿌려주는 작업
     }
