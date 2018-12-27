@@ -87,7 +87,6 @@ public class SignUpActivity extends AppCompatActivity {
             case R.id.finishBtn:
                 finishSignUp();
                 break;
-
         }
     }
 
