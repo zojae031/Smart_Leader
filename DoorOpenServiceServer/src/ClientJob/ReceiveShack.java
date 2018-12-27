@@ -14,7 +14,7 @@ public class ReceiveShack extends DBConnect implements DBConnectionInterface {
 	@Override
 	public Object excute(JsonObject data) throws SQLException {
 		MachinData queue;
-		queue = MachinData.getMuchinData();
+		queue = MachinData.getmachinData();
 		//queue.getmuchin().get();
 		MachinDataStruct temp = new MachinDataStruct();
 		temp.id = data.get("id").toString().replaceAll("\"", "");

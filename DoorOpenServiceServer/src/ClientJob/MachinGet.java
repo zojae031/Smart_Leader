@@ -16,22 +16,26 @@ public class MachinGet extends DBConnect implements DBConnectionInterface {
 	public Object excute(JsonObject data) throws SQLException {
 		ResultSet res;
 		PreparedStatement stat;
-		ArrayList<MachinDataStruct> muchin= null;
+		ArrayList<ArrayList<MachinDataStruct>> machin = null;
+		ArrayList<MachinDataStruct> temp2= null;
+		
 		if(!connection())
 			return null;
 		stat = conn.prepareStatement(GETMUCHIN);
 		res=stat.executeQuery();
-		muchin = new ArrayList<MachinDataStruct>();
+		machin = new ArrayList<ArrayList<MachinDataStruct>>();
 		while(res.next())
 		{
 			MachinDataStruct temp;
+			temp2 = new ArrayList<MachinDataStruct>();
 			temp = new MachinDataStruct();
 			temp.uuid = res.getString("UUID");
 			temp.major= res.getInt("major");
 			temp.minor = res.getInt("minor");
 			temp.id = null;
-			muchin.add(temp);
+			temp2.add(temp);
+			machin.add(temp2);
 		}
-		return muchin;
+		return machin;
 	}	
 }
