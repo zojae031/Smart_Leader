@@ -51,7 +51,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void findView() {
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
-        id.setFilters(new InputFilter[]{filter});
+        //id.setFilters(new InputFilter[]{filter});
         password.setFilters(new InputFilter[]{filter});
     }
 

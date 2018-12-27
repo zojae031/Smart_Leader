@@ -76,6 +76,7 @@ public class BeaconService extends Service {
             public void onBeaconsDiscovered(Region region, List<Beacon> list) {
                 for(Beacon beacon : list){
                     if(AppManager.getInstance().getShakeFlag()) {
+                        //가까운 거리 Beacon 넣어주기
                         BeaconVO beaconVO = new BeaconVO(beacon.getProximityUUID().toString(),beacon.getMajor(),beacon.getMinor());
                         ShakeAlgorithm.getInstance(context).registerListener();
                         AppManager.getInstance().setBeaconVO(beaconVO);

@@ -1,0 +1,45 @@
+[33m4ad8712[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;32mJY[m[33m)[m merge
+[33m3e2ea64[m[33m ([m[1;31morigin/SS[m[33m, [m[1;32mSS[m[33m)[m merge
+[33me148244[m a
+[33md722db6[m 1
+[33m370fa42[m a
+[33m265c4d1[m Merge branch 'songmag'
+[33mcac17c5[m Merge branch 'SS'
+[33mab08041[m[33m ([m[1;31morigin/JY[m[33m)[m 수정
+[33m8092192[m 회원가입 구현 완료
+[33m2e18d0d[m[33m ([m[1;31morigin/songmag[m[33m, [m[1;32msongmag[m[33m)[m Server Queue make finish
+[33me216cf2[m Merge branch 'master' of https://github.com/zojae031/Smart_Leader into JY
+[33meeac9b5[m Define Beacon Information Connection
+[33m7f34a40[m Merge branch 'songmag'
+[33m26da468[m hwp
+[33m51b6f57[m Server 1.0
+[33m295ba79[m Merge branch 'JY' of https://github.com/zojae031/Smart_Leader into SS
+[33mba70443[m Edit Server Company JsonArray
+[33mb2cc2af[m merge
+[33m6429378[m a
+[33m183878e[m Error in Intent
+[33meaf6657[m Merge branch 'SS' into JY
+[33mf7dcb8d[m Define Beacon Information Connection
+[33mf68c489[m 쉬러감
+[33mb9dad4f[m Sign UP Handler edit
+[33ma99f68f[m Merge branch 'SS' into JY
+[33ma86e770[m tmp
+[33me639df8[m 회원가입 부분 수정
+[33m853d4d4[m merge SS
+[33m2e28641[m info_Btn 기능 추가
+[33m4441940[m Sign_up & Duplicate check
+[33m017bf38[m Merge branch 'songmag'
+[33me5941d5[m Merge branch 'SS'
+[33mdb44c66[m Add ShakeAlgorithm & ServerConnect
+[33mc6a6f29[m 짜잘한 작업
+[33m1403021[m Server.ver.0.5
+[33m41029ea[m Merge branch 'SS'
+[33m3e2f147[m 기존에 있던 회원가입, 팝업/ 앱로고 수정
+[33mb900767[m Create inner Database & Edit Login, Logout connect
+[33m07ddcda[m server change
+[33m57ac046[m Update README.md
+[33m4744fe0[m Create AppMananger (by Singleton Pattern) & Create ServerLogout
+[33mf2b69fe[m Background Beacon Service & IP input sample
+[33ma2bba73[m Update README.md
+[33m8e71993[m Basic Server Connection Define
+[33mb24ab73[m Android handler & Server Sample
