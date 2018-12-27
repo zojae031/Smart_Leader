@@ -22,7 +22,7 @@ public class DBConst {
 	protected static final int ID_DUPLICATE = 500;
 	protected static final int BEACON_INFO = 600;
 	protected static final int COMPANY_ALL = 700;
-	protected  static final String SIGNUPSQL = "insert into member (id,password,name) values (?,?,?)";
+	protected  static final String SIGNUPSQL = "insert into member (id,password,name,flag) values (?,?,?,0)";
 	protected  static final String SIGNINSQL = "update member set flag = 1 where id =? and password = ? and flag = 0";
 	protected  static final String LOGOUTSQL = "update member set flag = 0 where id = ?";
 	protected  static final String COMPANYSQL = "Select * from company where company.company in (Select company from connect_company where id = ?)";

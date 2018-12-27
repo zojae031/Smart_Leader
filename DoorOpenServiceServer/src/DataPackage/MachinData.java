@@ -37,6 +37,7 @@ public class MachinData {
 		ArrayList<MachinDataStruct> temp= null;
 		for(ArrayList<MachinDataStruct> a : machin)
 		{
+			System.out.printf("%s, %s, %d %d\n", a.get(0).id,a.get(0).uuid,a.get(0).major,a.get(0).minor);		
 			if(a.get(0).uuid.equals(uuid) && a.get(0).major == major && a.get(0).minor == minor)
 				{
 					temp = a;
