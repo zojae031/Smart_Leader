@@ -8,7 +8,11 @@ public class UserVO implements Serializable {
     private String company;
     private String name;
 
-    public UserVO(String id, String password, String company, String name) {
+
+
+
+    public UserVO(String id,String password,String company,String name){
+
         this.id = id;
         this.password = password;
         this.company = company;
@@ -43,9 +47,13 @@ public class UserVO implements Serializable {
         return password;
     }
 
+
     public void setCompany(String company) {
         this.company = company;
     }
+
+
+
 
     public void setName(String name) {
         this.name = name;
