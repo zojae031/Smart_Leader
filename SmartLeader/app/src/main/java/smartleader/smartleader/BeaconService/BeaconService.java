@@ -27,6 +27,7 @@ public class BeaconService extends Service {
     static final String TAG = "비콘";
     BeaconManager beaconManager;
     private Context context;
+    private int min;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -75,12 +76,15 @@ public class BeaconService extends Service {
             @Override
             public void onBeaconsDiscovered(Region region, List<Beacon> list) {
                 for(Beacon beacon : list){
+                    min = Math.abs(beacon.getRssi());
                     if(AppManager.getInstance().getShakeFlag()) {
-                        BeaconVO beaconVO = new BeaconVO(beacon.getProximityUUID().toString(),beacon.getMajor(),beacon.getMinor());
-                        ShakeAlgorithm.getInstance(context).registerListener();
-                        AppManager.getInstance().setBeaconVO(beaconVO);
-                        Log.e(TAG,"RSSI"+beacon.getRssi());
-                        Log.e(TAG,"UUID"+beacon.getProximityUUID());
+                        if(min >= Math.abs(beacon.getRssi())){
+                            BeaconVO beaconVO = new BeaconVO(beacon.getProximityUUID().toString(), beacon.getMajor(), beacon.getMinor());
+                            ShakeAlgorithm.getInstance(context).registerListener();
+                            AppManager.getInstance().setBeaconVO(beaconVO);
+                            Log.e(TAG, "RSSI" + beacon.getRssi());
+                            Log.e(TAG, "UUID" + beacon.getProximityUUID());
+                        }
                     }
                 }
             }
@@ -99,6 +103,7 @@ public class BeaconService extends Service {
     private void setNotification() {
         startForeground(1, new Notification());
     }
+    
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
