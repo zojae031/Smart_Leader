@@ -28,9 +28,9 @@
         </activity>
         <activity android:name=".Activity.SignUpActivity" android:screenOrientation="portrait"/>
         <activity android:name=".Activity.SelectCompanyActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="unspecified"/>
         <service android:name=".BeaconService.BeaconService"
-            android:process=".remote"
+
             >
 
         </service>

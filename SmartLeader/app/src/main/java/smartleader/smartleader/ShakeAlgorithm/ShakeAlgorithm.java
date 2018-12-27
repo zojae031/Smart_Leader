@@ -106,12 +106,6 @@ public class ShakeAlgorithm implements SensorEventListener, IShakeCallback {
                     String id = preferences.getString("id","");
 
                     new Server_Send_Beacon_Information(AppManager.getInstance().getHandler(),new UserVO(id)).start();
-
-                    /*
-                    TODO 아마도 서버로 Beacon 정보를 보낸다.
-                     */
-
-
                 }
 
                 locationHolder.setLastLocation(event.values[0], event.values[1], event.values[2]);

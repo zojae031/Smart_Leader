@@ -19,6 +19,8 @@ import smartleader.smartleader.Server.ServerLogout;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     BluetoothAdapter bluetoothAdapter;
     SharedPreferences preferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
