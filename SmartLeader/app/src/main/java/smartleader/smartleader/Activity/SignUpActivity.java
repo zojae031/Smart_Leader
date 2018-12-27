@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
+
 import java.util.regex.Pattern;
 
 import smartleader.smartleader.AppManager;
@@ -130,7 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (CONFIRM_NAME_OK && CONFIRM_ID_OK && CONFIRM_PW_OK && CONFIRM_COMPANY_OK) {
             CHECK_ASYNCTASK = false;
-            new Server_Sign_Up(AppManager.getInstance().getHandler(),new UserVO(user_id,user_pw,companyName,user_name));
+            //new Server_Sign_Up(AppManager.getInstance().getHandler(),new UserVO(user_id,user_pw,companyName,user_name));
             /*서버로 넘어가는 부분*/
             return true;
         } else
