@@ -60,4 +60,23 @@ public class MachinData {
 		}
 		return null;
 	}
+	public boolean check_my_id(String uuid,int major,int minor,String id)
+	{
+		ArrayList<MachinDataStruct> temp;
+		temp = find_uuid(uuid,major,minor);
+		for(MachinDataStruct a : temp)
+		{
+			if(a.id.equals(id))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public void pop_machin(String uuid,int major,int minor)
+	{
+		ArrayList<MachinDataStruct> temp;
+		temp = find_uuid(uuid,major,minor);
+		temp.remove(1);
+	}
 }

@@ -30,13 +30,9 @@ public class ReceiveShack extends DBConnect implements DBConnectionInterface {
 		queue.find_uuid(temp.uuid, temp.major, temp.minor).add(temp);
 		queue.toString();
 		// TODO Auto-generated method stub
-		try {
-			Thread.sleep(5000);
-			System.out.println("5초 경과");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		while(queue.check_my_id(temp.uuid, temp.major, temp.minor, temp.id))
+		{}
+		queue.pop_machin(temp.uuid, temp.major, temp.minor);
 		return BEACON_SUCCESS;
 	}
 }

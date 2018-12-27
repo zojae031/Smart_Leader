@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/home/songmag/workspace/Smart_Leader/DoorOpenServiceServer/Server/mariadb-java-client-2.3.0.jar"/>
 	<classpathentry kind="lib" path="/home/songmag/workspace/Smart_Leader/DoorOpenServiceServer/Server/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="/home/songmag/workspace/Smart_Leader/DoorOpenServiceServer/Server/bluecove-2.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
