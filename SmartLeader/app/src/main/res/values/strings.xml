@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SMART PASS</string>
+    <string name ="konkuk">건국대학교</string>
+    <string name ="samsung">삼성전자</string>
+    <string name ="sejong">세종대학교</string>
+    <string name ="seoul">서울대학교</string>
 </resources>
