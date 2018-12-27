@@ -9,6 +9,7 @@ import ClientJob.CompanySend;
 import ClientJob.DuplicateID;
 import ClientJob.Login;
 import ClientJob.Logout;
+import ClientJob.ReceiveShack;
 import ClientJob.SignUp;
 import ClientJob.StateCheck;
 
@@ -19,22 +20,24 @@ public class DBFactory {
 		key = Integer.parseInt(data.get("key").toString());
 		switch(key)
 		{
-		case DBConnect.LOGIN:
+		case DBConst.LOGIN:
 			return new Login();
-		case DBConnect.LOGOUT:
+		case DBConst.LOGOUT:
 			return new Logout();
 		case DBConnect.STATE_CHECK:
 			return new StateCheck();
 		case 3:
 			return new CompanySend();
-		case 4:
+		case DBConst.ID_DUPLICATE:
 			return new DuplicateID();
-		case 5:
+		case DBConst.SIGN_UP:
 			return new SignUp();
 		case 6:
 			return new Admin();
-		case 7:
+		case DBConst.COMPANY_ALL:
 			return new CompanyAll();
+		case DBConst.BEACON_INFO :
+			return new ReceiveShack();
 		}
 		return null;
 	}

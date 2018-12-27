@@ -7,9 +7,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.regex.Pattern;
 
 import smartleader.smartleader.AppManager;
 import smartleader.smartleader.Model.UserVO;
@@ -47,6 +51,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void findView() {
         id = findViewById(R.id.id);
         password = findViewById(R.id.password);
+        id.setFilters(new InputFilter[]{filter});
+        password.setFilters(new InputFilter[]{filter});
     }
 
     private void HandlerSetting() {
@@ -101,4 +107,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    protected InputFilter filter = new InputFilter() {
+
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[a-zA-Z0-9]+$");
+
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
 }

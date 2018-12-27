@@ -1,18 +1,21 @@
 package smartleader.smartleader.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class UserVO implements Serializable {
     private String id;
     private String password;
-    private String company;
+    private ArrayList<String> company;
     private String name;
-    public UserVO(String id,String password,String company,String name){
+
+    public UserVO(String id,String password,ArrayList<String> company,String name){
         this.id = id;
         this.password = password;
         this.company = company;
         this.name = name;
     }
+    public UserVO(){}
     public UserVO(String id){
         this.id = id;
     }
@@ -25,7 +28,7 @@ public class UserVO implements Serializable {
         return id;
     }
 
-    public String getCompany() {
+    public ArrayList<String> getCompany() {
         return company;
     }
 
@@ -37,9 +40,7 @@ public class UserVO implements Serializable {
         return password;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
+    public void setCompany(ArrayList<String> company) { this.company = company; }
 
     public void setName(String name) {
         this.name = name;

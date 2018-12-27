@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -15,6 +16,9 @@ import com.estimote.sdk.Region;
 import java.util.List;
 import java.util.UUID;
 
+import smartleader.smartleader.AppManager;
+import smartleader.smartleader.Model.BeaconVO;
+import smartleader.smartleader.ServerThreadHandler.ServerHandler;
 import smartleader.smartleader.ShakeAlgorithm.ShakeAlgorithm;
 
 public class BeaconService extends Service {
@@ -23,6 +27,7 @@ public class BeaconService extends Service {
     static final String TAG = "Beacon";
     BeaconManager beaconManager;
     private Context context;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
@@ -30,17 +35,21 @@ public class BeaconService extends Service {
 
     @Override
     public void onCreate() {
+        context = getApplicationContext();
+        AppManager.getInstance().setHandler(new ServerHandler(context));
         BeaconManagerSetting();
         setNotification();
-        context = getApplicationContext();
+
         super.onCreate();
     }
     @Override
     public void onDestroy() {
         beaconManager.disconnect();
     }
+
     private void BeaconManagerSetting(){
         beaconManager = new BeaconManager(this);
+
         beaconManager.setBackgroundScanPeriod(8000,0);
         beaconManager.setForegroundScanPeriod(8000,0);
 
@@ -48,10 +57,10 @@ public class BeaconService extends Service {
         beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onEnteredRegion(Region region, List<Beacon> list) {
-                Log.e(TAG,"비콘 감지"+list.get(0).getRssi());
-                if(!ShakeAlgorithm.getInstance(context).isListenerSet()){
-                    ShakeAlgorithm.getInstance(context).registerListener();
+                if(list.size()!=0) {
+                    Log.e(TAG, "비콘 감지" + list.get(0).getRssi());
                 }
+
             }
 
             @Override
@@ -61,12 +70,18 @@ public class BeaconService extends Service {
             }
         });
         //거리 탐색 설정
+
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(Region region, List<Beacon> list) {
                 for(Beacon beacon : list){
-                    Log.e(TAG,"RSSI"+beacon.getRssi());
-                    Log.e(TAG,"UUID"+beacon.getProximityUUID());
+                    if(AppManager.getInstance().getShakeFlag()) {
+                        BeaconVO beaconVO = new BeaconVO(beacon.getProximityUUID().toString(),beacon.getMajor(),beacon.getMinor());
+                        ShakeAlgorithm.getInstance(context).registerListener();
+                        AppManager.getInstance().setBeaconVO(beaconVO);
+                        Log.e(TAG,"RSSI"+beacon.getRssi());
+                        Log.e(TAG,"UUID"+beacon.getProximityUUID());
+                    }
                 }
             }
         });

@@ -13,20 +13,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import smartleader.smartleader.AppManager;
+import smartleader.smartleader.Model.CompanyVO;
 import smartleader.smartleader.Model.UserVO;
 import smartleader.smartleader.R;
+import smartleader.smartleader.Server.ServerCompanyCheck;
 import smartleader.smartleader.Server.Server_Id_Duplicate;
+import smartleader.smartleader.Server.Server_Sign_Up;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText id, pw, pw_2, name;
-    private String user_id, user_pw, user_pw2, user_name;
+    private String  user_pw, user_pw2;
     private TextView company, pw_signal;
 
-    private final int REQUEST_CODE = 100;
+    public static final int REQUEST_CODE = 100;
 
     private boolean CONFIRM_ID_OK = false;
     private boolean CONFIRM_PW_OK = false;
@@ -37,13 +41,16 @@ public class SignUpActivity extends AppCompatActivity {
     Intent intent;
     private long backKeyPressedTime = 0;
 
-    private String companyName = "";//서버로 보낼 company이름
+    private String companyName="";
+
+    private UserVO userVO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userVO = new UserVO();
         setContentView(R.layout.activity_sign_up);
-
+        AppManager.getInstance().setSignUpActivity(this);
         SetContents();
 
         StartASyncTask();
@@ -99,24 +106,27 @@ public class SignUpActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE) {
-            companyName = data.getStringExtra("compName");
-            String textCompany = data.getStringExtra("textCompany");
-            company.setText(textCompany);
+            companyName = data.getStringExtra("companyName");
+            company.setText(companyName);
         }
     }
 
     private void checkUserName() {
-        user_name = name.getText().toString();
+        userVO.setName(name.getText().toString());
 
-        if (user_name != null) {
-            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(user_name),CONFIRM_NAME_OK).start();
+        if (userVO.getName() != null) {
+            CONFIRM_NAME_OK = true;
         }
     }
 
     private void checkCompName() {
-        company.getText().toString();
+        /*
+         * TODO company 정보를 다중클릭으로 받아 userVO에 ArrayList로 저장하기
+         */
+//        userVO.setCompany(company.getText().toString());
 
-        if(company.equals("")){
+
+        if(userVO.getCompany().size()==0){
             CONFIRM_COMPANY_OK = false;
         }
         else{
@@ -130,12 +140,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (CONFIRM_NAME_OK && CONFIRM_ID_OK && CONFIRM_PW_OK && CONFIRM_COMPANY_OK) {
             CHECK_ASYNCTASK = false;
+            new Server_Sign_Up(AppManager.getInstance().getHandler(),userVO);
             /*서버로 넘어가는 부분*/
             return true;
         } else
             return false;
-
-
     }
 
     @Override
@@ -189,18 +198,17 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     public void getUserId() {
-        user_id = id.getText().toString();
+        userVO.setId(id.getText().toString());
 
-        if (user_id.length() < 4 || user_id.length() > 16)
+        if (userVO.getId().length() < 4 || userVO.getId().length() > 16)
             Toast.makeText(getApplicationContext(), "아이디를 정확히 입력해주세요.", Toast.LENGTH_SHORT).show();
         else {
-            //서버에서 ID 중복확인 받는 코드 , RSULT_CODE 받아야됨
+            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(userVO.getId()),CONFIRM_ID_OK).start();
         }
     }
 
     public void startSelectPopup() {
-        intent = new Intent(this, SelectCompanyActivity.class);
-        startActivityForResult(intent, REQUEST_CODE);
+        new ServerCompanyCheck(AppManager.getInstance().getHandler()).start();
     }
 
     public void finishSignUp() {
@@ -213,6 +221,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void getUserPassword() {
+
         user_pw = pw.getText().toString();
         user_pw2 = pw_2.getText().toString();
 
@@ -222,6 +231,7 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (user_pw.equals(user_pw2)) {
             CONFIRM_PW_OK = true;
             pw_signal.setText("사용가능");
+            userVO.setPassword(user_pw);
             pw_signal.setTextColor(Color.parseColor("#99FF99"));
         } else {
             pw_signal.setText("비밀번호가 일치하지 않습니다.");

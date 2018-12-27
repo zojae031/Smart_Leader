@@ -1,11 +1,16 @@
 package smartleader.smartleader.ShakeAlgorithm;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Vibrator;
+
+import smartleader.smartleader.AppManager;
+import smartleader.smartleader.Model.UserVO;
+import smartleader.smartleader.Server.Server_Send_Beacon_Information;
 
 public class ShakeAlgorithm implements SensorEventListener, IShakeCallback {
 
@@ -13,6 +18,7 @@ public class ShakeAlgorithm implements SensorEventListener, IShakeCallback {
     private LocationHolder locationHolder; //좌표정보를 저장,관리하는 클래스
     Vibrator vibrator; //알고리즘이 제대로 동작하였을시 작동하는 vibrator 객체
     static SensorManager sensorManager; //Shake 정보를 얻어올 Manager 객체
+    SharedPreferences preferences;
 
     //변수
     private float speed; //가속 스피드를 저장할 변수
@@ -21,7 +27,6 @@ public class ShakeAlgorithm implements SensorEventListener, IShakeCallback {
     private static ShakeAlgorithm instance = null;
     //앱 정보
     Context context;
-
 
 
     public static ShakeAlgorithm getInstance(Context context) {
@@ -40,9 +45,9 @@ public class ShakeAlgorithm implements SensorEventListener, IShakeCallback {
         //센서 리스너 등록
 
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE); //SeosorManager가져오기
-        if (!isListenerSet()) {
-            registerListener();
-        }
+
+        registerListener();
+
         //ShakeService가 시작됨을 알리는 바이브레이터
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -96,14 +101,11 @@ public class ShakeAlgorithm implements SensorEventListener, IShakeCallback {
 
 
                     removeListener();//블루투스 송신을 위해 리스너 제거
+                    AppManager.getInstance().setShakeFlag(false);
+                    preferences = context.getSharedPreferences("data",Context.MODE_PRIVATE);
+                    String id = preferences.getString("id","");
 
-                    /*
-                    TODO 아마도 서버로 Beacon 정보를 보낸다.
-                     */
-
-
-
-
+                    new Server_Send_Beacon_Information(AppManager.getInstance().getHandler(),new UserVO(id)).start();
                 }
 
                 locationHolder.setLastLocation(event.values[0], event.values[1], event.values[2]);
@@ -116,5 +118,6 @@ public class ShakeAlgorithm implements SensorEventListener, IShakeCallback {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         //센서의 정확도 값이 바뀔 때 호출
     }
+
 
 }

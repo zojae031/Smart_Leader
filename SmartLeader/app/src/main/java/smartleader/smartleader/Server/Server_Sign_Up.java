@@ -25,7 +25,7 @@ public class Server_Sign_Up extends ServerConnection {
         jsonObject.put("id", userVO.getId());
         jsonObject.put("password",userVO.getPassword());
         jsonObject.put("name",userVO.getName());
-        jsonObject.put("company",userVO.getCompany());
+        jsonObject.put("company",userVO.getCompany());//TODO 나중에 JsonArray로 전송하기
 
         PrintWriter out = new PrintWriter(writer,true);
         out.println(jsonObject);

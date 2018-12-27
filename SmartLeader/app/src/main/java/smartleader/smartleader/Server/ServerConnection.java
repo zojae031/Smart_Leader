@@ -25,7 +25,7 @@ public abstract class ServerConnection extends Thread {
     public static final int SERVER_CONNECT_ERROR = 999;
 
     //Server Information
-    private String SERVER_ID = "192.168.1.101";
+    private String SERVER_ID = "172.16.31.155";
     private int port = 5050;
 
     //Server Connect
@@ -70,12 +70,16 @@ public abstract class ServerConnection extends Thread {
             handler.sendMessage(msg);
         } catch (JSONException e) {
             e.printStackTrace();
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            msg.what = SERVER_CONNECT_ERROR;
+            handler.sendMessage(msg);
         }
     }
 
     abstract void sendData() throws JSONException;
 
-    abstract void receiveData();
+    abstract void receiveData() throws NumberFormatException;
 
     void closeSocket() throws IOException {
         writer.close();
