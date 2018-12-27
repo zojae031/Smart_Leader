@@ -19,6 +19,7 @@ public class Server_Id_Duplicate extends ServerConnection {
     public Server_Id_Duplicate(Handler handler,UserVO userVO,boolean CONFIRM_ID_OK) {
         super(handler);
         this.userVO = userVO;
+
         this.CONFIRM_ID_OK = CONFIRM_ID_OK;
     }
 

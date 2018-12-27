@@ -41,10 +41,12 @@ public class Server_Send_Beacon_Information extends ServerConnection {
                 }catch (IOException e){
                     e.printStackTrace();
                 }
-                switch (Integer.parseInt(Result)){
-                    case BEACON_SUCCESS :
-                        msg.what = BEACON_SUCCESS;
-                        break;
+                if(Result!=null) {
+                    switch (Integer.parseInt(Result)) {
+                        case BEACON_SUCCESS:
+                            msg.what = BEACON_SUCCESS;
+                            break;
+                    }
                 }
                 handler.sendMessage(msg);
             }

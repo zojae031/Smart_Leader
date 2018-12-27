@@ -24,7 +24,7 @@ import smartleader.smartleader.ShakeAlgorithm.ShakeAlgorithm;
 public class BeaconService extends Service {
 
 
-    static final String TAG = "Beacon";
+    static final String TAG = "비콘";
     BeaconManager beaconManager;
     private Context context;
 
@@ -50,8 +50,8 @@ public class BeaconService extends Service {
     private void BeaconManagerSetting(){
         beaconManager = new BeaconManager(this);
 
-        beaconManager.setBackgroundScanPeriod(8000,0);
-        beaconManager.setForegroundScanPeriod(8000,0);
+        beaconManager.setBackgroundScanPeriod(5000,0);
+        beaconManager.setForegroundScanPeriod(5000,0);
 
         //해당 위치에 들어왔을 때
         beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
