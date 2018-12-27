@@ -14,6 +14,8 @@ import smartleader.smartleader.Model.UserVO;
 import smartleader.smartleader.Server.ServerConnection;
 import smartleader.smartleader.Server.ServerLogin;
 import smartleader.smartleader.Server.ServerLogout;
+import smartleader.smartleader.Server.Server_Id_Duplicate;
+import smartleader.smartleader.Server.Server_Sign_Up;
 import smartleader.smartleader.Server.Server_State_Check;
 
 public class ServerHandler extends Handler {
@@ -42,7 +44,7 @@ public class ServerHandler extends Handler {
                 startMainAct();
                 break;
             case ServerLogin.LOGIN_ALREADY_CONNECT:
-                Toast.makeText(context,"이미 로그인 중 입니다.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "이미 로그인 중 입니다.", Toast.LENGTH_SHORT).show();
                 break;
             case ServerLogin.LOGIN_FAIL:
                 Toast.makeText(context, "정보가 틀렸습니다.", Toast.LENGTH_SHORT).show();
@@ -64,22 +66,35 @@ public class ServerHandler extends Handler {
             case Server_State_Check.STATE_NOT_LOGIN:
                 //DO NOTHING
                 break;
+            //400 SIGN_UP
+            case Server_Sign_Up
+                    .SIGN_UP_SUCCESS:
+                break;
+            //500 ID_DUPLICATE
+            case Server_Id_Duplicate
+                    .DUPLICATE:
+                break;
+            case Server_Id_Duplicate.NOT_DUPLICATE:
+                break;
+
         }
     }
 
-    private void startMainAct(){
+    private void startMainAct() {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(intent);
     }
+
     private void login_ok(Message msg) {
         preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
         editor = preferences.edit();
         editor.putString("id", ((UserVO) msg.obj).getId());
         editor.commit();
     }
-    private void logout_ok(){
-        preferences = context.getSharedPreferences("data",Context.MODE_PRIVATE);
+
+    private void logout_ok() {
+        preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
         editor = preferences.edit();
         editor.remove("id");
         editor.commit();

@@ -2,6 +2,7 @@ package smartleader.smartleader.BeaconService;
 
 import android.app.Notification;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -14,11 +15,14 @@ import com.estimote.sdk.Region;
 import java.util.List;
 import java.util.UUID;
 
+import smartleader.smartleader.ShakeAlgorithm.ShakeAlgorithm;
+
 public class BeaconService extends Service {
 
 
     static final String TAG = "Beacon";
     BeaconManager beaconManager;
+    private Context context;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
@@ -28,6 +32,7 @@ public class BeaconService extends Service {
     public void onCreate() {
         BeaconManagerSetting();
         setNotification();
+        context = getApplicationContext();
         super.onCreate();
     }
     @Override
@@ -36,19 +41,23 @@ public class BeaconService extends Service {
     }
     private void BeaconManagerSetting(){
         beaconManager = new BeaconManager(this);
-        beaconManager.setBackgroundScanPeriod(10000,0);
-        beaconManager.setForegroundScanPeriod(10000,0);
+        beaconManager.setBackgroundScanPeriod(8000,0);
+        beaconManager.setForegroundScanPeriod(8000,0);
 
         //해당 위치에 들어왔을 때
         beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onEnteredRegion(Region region, List<Beacon> list) {
                 Log.e(TAG,"비콘 감지"+list.get(0).getRssi());
+                if(!ShakeAlgorithm.getInstance(context).isListenerSet()){
+                    ShakeAlgorithm.getInstance(context).registerListener();
+                }
             }
 
             @Override
             public void onExitedRegion(Region region) {
                 Log.e(TAG,"비콘벗어남");
+                ShakeAlgorithm.getInstance(context).removeListener();
             }
         });
         //거리 탐색 설정
@@ -57,6 +66,7 @@ public class BeaconService extends Service {
             public void onBeaconsDiscovered(Region region, List<Beacon> list) {
                 for(Beacon beacon : list){
                     Log.e(TAG,"RSSI"+beacon.getRssi());
+                    Log.e(TAG,"UUID"+beacon.getProximityUUID());
                 }
             }
         });
