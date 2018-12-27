@@ -15,8 +15,10 @@ import smartleader.smartleader.Server.ServerConnection;
 import smartleader.smartleader.Server.ServerLogin;
 import smartleader.smartleader.Server.ServerLogout;
 import smartleader.smartleader.Server.Server_Id_Duplicate;
+import smartleader.smartleader.Server.Server_Send_Beacon_Information;
 import smartleader.smartleader.Server.Server_Sign_Up;
 import smartleader.smartleader.Server.Server_State_Check;
+import smartleader.smartleader.ShakeAlgorithm.ShakeAlgorithm;
 
 public class ServerHandler extends Handler {
     Context context;//Application Context
@@ -73,10 +75,16 @@ public class ServerHandler extends Handler {
             //500 ID_DUPLICATE
             case Server_Id_Duplicate
                     .DUPLICATE:
-                Toast.makeText(context,"아이디가 중복됩니다.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "아이디가 중복됩니다.", Toast.LENGTH_SHORT).show();
                 break;
             case Server_Id_Duplicate.NOT_DUPLICATE:
-                Toast.makeText(context,"아이디가 중복되지 않습니다.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "아이디가 중복되지 않습니다.", Toast.LENGTH_SHORT).show();
+                break;
+            //600 BEACON_INFO
+            case Server_Send_Beacon_Information
+                    .BEACON_SUCCESS :
+                AppManager.getInstance().setShakeFlag(true);
+                ShakeAlgorithm.getInstance(context).registerListener();
                 break;
 
         }
