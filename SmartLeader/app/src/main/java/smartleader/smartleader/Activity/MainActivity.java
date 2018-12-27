@@ -1,9 +1,11 @@
 package smartleader.smartleader.Activity;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -50,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.logout : logout();
                 break;
-            case R.id.manager :
+            case R.id.info:
+                setInfoAlertDialog();
                 break;
         }
     }
@@ -58,5 +61,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         preferences = getSharedPreferences("data",MODE_PRIVATE);
         String id = preferences.getString("id","");
         new ServerLogout(AppManager.getInstance().getHandler(),new UserVO(id)).start();
+    }
+
+    private void setInfoAlertDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("문의")
+                .setMessage("E-mail) edgar3@naver.com\nTel) 010-3610-8845")
+                .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }
