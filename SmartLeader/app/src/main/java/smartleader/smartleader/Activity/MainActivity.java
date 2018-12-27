@@ -50,8 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.logout : logout();
                 break;
-            case R.id.manager :
-                break;
+
         }
     }
     private void logout(){
