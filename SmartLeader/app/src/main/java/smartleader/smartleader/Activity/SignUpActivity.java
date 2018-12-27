@@ -19,6 +19,7 @@ import smartleader.smartleader.AppManager;
 import smartleader.smartleader.Model.UserVO;
 import smartleader.smartleader.R;
 import smartleader.smartleader.Server.Server_Id_Duplicate;
+import smartleader.smartleader.Server.Server_Sign_Up;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -37,7 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
     Intent intent;
     private long backKeyPressedTime = 0;
 
-    private String companyName = "";//서버로 보낼 company이름
+    private String companyName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +100,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE) {
-            companyName = data.getStringExtra("compName");
-            String textCompany = data.getStringExtra("textCompany");
-            company.setText(textCompany);
+            companyName = data.getStringExtra("companyName");
+            company.setText(companyName);
         }
     }
 
@@ -109,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
         user_name = name.getText().toString();
 
         if (user_name != null) {
-            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(user_name),CONFIRM_NAME_OK).start();
+            CONFIRM_NAME_OK = true;
         }
     }
 
@@ -130,12 +130,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (CONFIRM_NAME_OK && CONFIRM_ID_OK && CONFIRM_PW_OK && CONFIRM_COMPANY_OK) {
             CHECK_ASYNCTASK = false;
+            new Server_Sign_Up(AppManager.getInstance().getHandler(),new UserVO(user_id,user_pw,companyName,user_name));
             /*서버로 넘어가는 부분*/
             return true;
         } else
             return false;
-
-
     }
 
     @Override
@@ -194,7 +193,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (user_id.length() < 4 || user_id.length() > 16)
             Toast.makeText(getApplicationContext(), "아이디를 정확히 입력해주세요.", Toast.LENGTH_SHORT).show();
         else {
-            //서버에서 ID 중복확인 받는 코드 , RSULT_CODE 받아야됨
+            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(user_id),CONFIRM_ID_OK).start();
         }
     }
 
