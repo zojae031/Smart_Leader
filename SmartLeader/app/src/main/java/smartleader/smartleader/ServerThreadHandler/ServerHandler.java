@@ -73,8 +73,10 @@ public class ServerHandler extends Handler {
             //500 ID_DUPLICATE
             case Server_Id_Duplicate
                     .DUPLICATE:
+                Toast.makeText(context,"아이디가 중복됩니다.",Toast.LENGTH_SHORT).show();
                 break;
             case Server_Id_Duplicate.NOT_DUPLICATE:
+                Toast.makeText(context,"아이디가 중복되지 않습니다.",Toast.LENGTH_SHORT).show();
                 break;
 
         }

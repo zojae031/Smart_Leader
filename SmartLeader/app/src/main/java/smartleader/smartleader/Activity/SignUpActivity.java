@@ -109,9 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
         user_name = name.getText().toString();
 
         if (user_name != null) {
-            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(user_name)).start();
-
-            CONFIRM_NAME_OK = true;
+            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(user_name),CONFIRM_NAME_OK).start();
         }
     }
 
