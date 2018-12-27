@@ -57,7 +57,9 @@ public class BeaconService extends Service {
         beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onEnteredRegion(Region region, List<Beacon> list) {
-                Log.e(TAG,"비콘 감지"+list.get(0).getRssi());
+                if(list.size()!=0) {
+                    Log.e(TAG, "비콘 감지" + list.get(0).getRssi());
+                }
 
             }
 

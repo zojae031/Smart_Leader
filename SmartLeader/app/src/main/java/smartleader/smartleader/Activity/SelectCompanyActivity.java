@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import smartleader.smartleader.AppManager;
 import smartleader.smartleader.R;
 
 public class SelectCompanyActivity extends Activity {
@@ -25,7 +29,7 @@ public class SelectCompanyActivity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        AppManager.getInstance().setSelectCompanyActivity(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_select_company);
 
@@ -72,6 +76,9 @@ public class SelectCompanyActivity extends Activity {
     }
 
     public void setList() {
+        Bundle bundle = getIntent().getExtras();
+        JsonArray jsonArray = (JsonArray) bundle.get("data");
+
         //서버에서 리스트 뿌려주는 작업
     }
 }

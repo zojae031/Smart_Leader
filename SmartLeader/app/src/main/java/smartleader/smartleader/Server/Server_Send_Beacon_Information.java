@@ -31,7 +31,7 @@ public class Server_Send_Beacon_Information extends ServerConnection {
     }
 
     @Override
-    void receiveData() {
+    void receiveData() throws NumberFormatException{
         new Thread(new Runnable() {
             @Override
             public void run() {

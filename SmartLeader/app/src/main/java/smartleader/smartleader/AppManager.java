@@ -13,6 +13,8 @@ public class AppManager {
 
     private Activity LoginActivity;
     private Activity MainActivity;
+    private Activity SelectCompanyActivity;
+    private Activity SignUpActivity;
 
     //BeaconVO
     BeaconVO beaconVO;
@@ -42,12 +44,28 @@ public class AppManager {
         return handler;
     }
 
+    public void setSignUpActivity(Activity signUpActivity) {
+        SignUpActivity = signUpActivity;
+    }
+
+    public Activity getSignUpActivity() {
+        return SignUpActivity;
+    }
+
     public void setLoginActivity(Activity loginActivity) {
         LoginActivity = loginActivity;
     }
 
     public void setMainActivity(Activity mainActivity) {
         MainActivity = mainActivity;
+    }
+
+    public void setSelectCompanyActivity(Activity selectCompanyActivity) {
+        SelectCompanyActivity = selectCompanyActivity;
+    }
+
+    public Activity getSelectCompanyActivity() {
+        return SelectCompanyActivity;
     }
 
     public Activity getLoginActivity() {

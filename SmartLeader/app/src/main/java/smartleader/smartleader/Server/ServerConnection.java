@@ -70,12 +70,16 @@ public abstract class ServerConnection extends Thread {
             handler.sendMessage(msg);
         } catch (JSONException e) {
             e.printStackTrace();
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            msg.what = SERVER_CONNECT_ERROR;
+            handler.sendMessage(msg);
         }
     }
 
     abstract void sendData() throws JSONException;
 
-    abstract void receiveData();
+    abstract void receiveData() throws NumberFormatException;
 
     void closeSocket() throws IOException {
         writer.close();

@@ -1,16 +1,25 @@
 package smartleader.smartleader.ServerThreadHandler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+
+import java.io.Serializable;
+
 import smartleader.smartleader.Activity.MainActivity;
+import smartleader.smartleader.Activity.SelectCompanyActivity;
+import smartleader.smartleader.Activity.SignUpActivity;
 import smartleader.smartleader.AppManager;
 import smartleader.smartleader.BeaconService.BeaconService;
 import smartleader.smartleader.Model.UserVO;
+import smartleader.smartleader.Server.ServerCompanyCheck;
 import smartleader.smartleader.Server.ServerConnection;
 import smartleader.smartleader.Server.ServerLogin;
 import smartleader.smartleader.Server.ServerLogout;
@@ -82,11 +91,19 @@ public class ServerHandler extends Handler {
                 break;
             //600 BEACON_INFO
             case Server_Send_Beacon_Information
-                    .BEACON_SUCCESS :
+                    .BEACON_SUCCESS:
                 AppManager.getInstance().setShakeFlag(true);
                 ShakeAlgorithm.getInstance(context).registerListener();
                 break;
-
+            case ServerCompanyCheck
+                    .COMPANY_SUCCESS:
+                Intent intent = new Intent(context, SelectCompanyActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", (Serializable) msg.obj);
+                intent.putExtras(bundle);
+                AppManager.getInstance().getSignUpActivity().startActivityForResult(intent,SignUpActivity.REQUEST_CODE);
+                break;
         }
     }
 
