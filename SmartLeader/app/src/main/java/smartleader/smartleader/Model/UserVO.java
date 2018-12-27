@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class UserVO implements Serializable {
     private String id;
     private String password;
-    private ArrayList<String> company;
+    private String company;
     private String name;
 
-    public UserVO(String id,String password,ArrayList<String> company,String name){
+    public UserVO(String id,String password,String company,String name){
         this.id = id;
         this.password = password;
         this.company = company;
@@ -28,7 +28,7 @@ public class UserVO implements Serializable {
         return id;
     }
 
-    public ArrayList<String> getCompany() {
+    public String getCompany() {
         return company;
     }
 
@@ -40,7 +40,7 @@ public class UserVO implements Serializable {
         return password;
     }
 
-    public void setCompany(ArrayList<String> company) { this.company = company; }
+    public void setCompany(String company) { this.company = company; }
 
     public void setName(String name) {
         this.name = name;

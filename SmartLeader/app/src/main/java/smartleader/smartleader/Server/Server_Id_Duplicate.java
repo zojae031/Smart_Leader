@@ -7,6 +7,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import smartleader.smartleader.Activity.SignUpActivity;
 import smartleader.smartleader.Model.UserVO;
 
 public class Server_Id_Duplicate extends ServerConnection {
@@ -14,12 +15,12 @@ public class Server_Id_Duplicate extends ServerConnection {
     public static final int DUPLICATE=501;
     public static final int NOT_DUPLICATE = 502;
     UserVO userVO;
-    boolean CONFIRM_ID_OK = false;
+    SignUpActivity.FlagHolder flagHolder;
 
-    public Server_Id_Duplicate(Handler handler,UserVO userVO,boolean CONFIRM_ID_OK) {
+    public Server_Id_Duplicate(Handler handler,UserVO userVO,SignUpActivity.FlagHolder flagHolder) {
         super(handler);
         this.userVO = userVO;
-        this.CONFIRM_ID_OK = CONFIRM_ID_OK;
+        this.flagHolder = flagHolder;
     }
 
     @Override
@@ -44,11 +45,11 @@ public class Server_Id_Duplicate extends ServerConnection {
                 switch (Integer.parseInt(Result)){
                     case DUPLICATE :
                         msg.what = DUPLICATE;
-                        CONFIRM_ID_OK = false;
+                        flagHolder.ID_OK = false;
                         break;
                     case NOT_DUPLICATE :
                         msg.what = NOT_DUPLICATE;
-                        CONFIRM_ID_OK = true;
+                        flagHolder.ID_OK = true;
                         break;
                 }
                 handler.sendMessage(msg);
