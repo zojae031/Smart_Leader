@@ -8,12 +8,16 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
+
 import java.util.ArrayList;
+
 import java.util.regex.Pattern;
 
 import smartleader.smartleader.AppManager;
@@ -37,11 +41,11 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean CONFIRM_NAME_OK = false;
     private boolean CONFIRM_COMPANY_OK = false;
     private boolean CHECK_ASYNCTASK = true;
-
-    Intent intent;
+    FlagHolder flagHolder;
     private long backKeyPressedTime = 0;
 
     private String companyName="";
+    private String compName="";
 
     private UserVO userVO;
 
@@ -106,8 +110,11 @@ public class SignUpActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE) {
-            companyName = data.getStringExtra("companyName");
+            companyName = data.getStringExtra("compName");
             company.setText(companyName);
+
+            compName = data.getStringExtra("originCompName"); ////////userVO에 넣어서 보내기
+            userVO.setCompany(compName);
         }
     }
 
@@ -126,7 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
 //        userVO.setCompany(company.getText().toString());
 
 
-        if(userVO.getCompany().size()==0){
+        if(userVO.getCompany().equals("")){
             CONFIRM_COMPANY_OK = false;
         }
         else{
@@ -138,9 +145,9 @@ public class SignUpActivity extends AppCompatActivity {
         checkUserName();
         checkCompName();
 
-        if (CONFIRM_NAME_OK && CONFIRM_ID_OK && CONFIRM_PW_OK && CONFIRM_COMPANY_OK) {
+        if (CONFIRM_NAME_OK && flagHolder.ID_OK && CONFIRM_PW_OK && CONFIRM_COMPANY_OK) {
             CHECK_ASYNCTASK = false;
-            new Server_Sign_Up(AppManager.getInstance().getHandler(),userVO);
+
             /*서버로 넘어가는 부분*/
             return true;
         } else
@@ -195,15 +202,14 @@ public class SignUpActivity extends AppCompatActivity {
         mTask.execute();
     }
 
-
-
     public void getUserId() {
         userVO.setId(id.getText().toString());
 
         if (userVO.getId().length() < 4 || userVO.getId().length() > 16)
             Toast.makeText(getApplicationContext(), "아이디를 정확히 입력해주세요.", Toast.LENGTH_SHORT).show();
         else {
-            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(userVO.getId()),CONFIRM_ID_OK).start();
+             flagHolder = new FlagHolder(CONFIRM_ID_OK);
+            new Server_Id_Duplicate(AppManager.getInstance().getHandler(),new UserVO(userVO.getId()),flagHolder).start();
         }
     }
 
@@ -213,6 +219,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void finishSignUp() {
         if (checkSignUp()) {
+            new Server_Sign_Up(AppManager.getInstance().getHandler(),userVO).start();
             Toast.makeText(getApplicationContext(), "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
             finish();
         } else {
@@ -236,6 +243,14 @@ public class SignUpActivity extends AppCompatActivity {
         } else {
             pw_signal.setText("비밀번호가 일치하지 않습니다.");
             pw_signal.setTextColor(Color.parseColor("#FF8888"));
+        }
+    }
+
+    public class FlagHolder{
+        public boolean ID_OK;
+
+        public FlagHolder(boolean ID_OK){
+            this.ID_OK = ID_OK;
         }
     }
 }
