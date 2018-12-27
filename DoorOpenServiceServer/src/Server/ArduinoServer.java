@@ -13,7 +13,7 @@ public class ArduinoServer implements Runnable {
 		try {
 			local = InetAddress.getLocalHost();
 			//String ip = local.getHostAddress();//������ ip
-			String ip = "192.168.0.10";
+			String ip = "172.16.31.155";
 			System.out.println("IP : " + ip);
 			serverSocket = new ServerSocket(ServerPort);//������ ������ port
 			System.out.println("Server Open");

@@ -15,7 +15,7 @@ public class CompanyAll extends DBConnect implements DBConnectionInterface{
 	@Override
 	public Object excute(JsonObject data) throws SQLException {
 		JsonArray return_value;
-		return_value = makeList();//¸ðµç È¸»ç Á¤º¸¸¦ ¾Èµå·ÎÀÌµå¿¡ º¸³»ÁØ´Ù.
+		return_value = makeList();//ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½ï¿½ï¿½Ìµå¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		if(return_value== null)
 			return LOGIN_FAIL;
 		return return_value;
@@ -46,6 +46,5 @@ public class CompanyAll extends DBConnect implements DBConnectionInterface{
 		stat.close();
 		closeConnection();		
 		return return_value;
-	}// ¸ðµç µ¥ÀÌÅÍº£ÀÌ½º¿¡ ÀÖ´Â È¸»çÁ¤º¸¸¦ JsonArray ·Î ¸®ÅÏÇÑ´Ù.
-
+	}// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ JsonArray ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 }

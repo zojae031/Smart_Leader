@@ -21,13 +21,13 @@ public class DuplicateID extends DBConnect implements DBConnectionInterface {
 		if(!connection())
 			return LOGIN_FAIL;
 		if(!check_duplicate(data))
-			return_value = DUPLICATE_ID;
+			return_value = SIGNUP_DUPLICATE_ID;
 		closeConnection();
 		if(return_value == 0)
-			return_value = SUCCESS;
+			return_value = NOT_DUPLICATE_ID;
 		return return_value;
-	}//È¸¿ø°¡ÀÔÇÒ¶§ id°¡ Áßº¹µÇ´ÂÁö È®ÀÎÇÏ±â À§ÇÔ.
-	//Â÷ÈÄ¿¡ id°¡ Áßº¹µÈ´Ù¸é Á¤º¸ ¼öÁ¤°ú, Á¤º¸ Ãß°¡ µîÀÌ Á¸ÀçÇÒ ¼ö ÀÖµµ·Ï ¸¸µå´Â °ÍÀÌ ÁÁÀ» °Í °°´Ù.
+	}//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ idï¿½ï¿½ ï¿½ßºï¿½ï¿½Ç´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½.
+	//ï¿½ï¿½ï¿½Ä¿ï¿½ idï¿½ï¿½ ï¿½ßºï¿½ï¿½È´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	public boolean check_duplicate(JsonObject data) throws SQLException {
 		PreparedStatement stat;
 		stat = conn.prepareStatement(DUPLICATESQL);

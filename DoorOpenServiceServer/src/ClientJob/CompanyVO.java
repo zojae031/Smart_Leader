@@ -18,4 +18,4 @@ public class CompanyVO{
 		this.company = new JsonObject();
 		this.company.addProperty("company",company);
 	}
-}//JsonArray¿¡ Json Object ¸¦ ³Ö±â À§ÇÑ ±¸Á¶Ã¼
+}//JsonArrayï¿½ï¿½ Json Object ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
