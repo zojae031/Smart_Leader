@@ -64,9 +64,10 @@ public class MachinData {
 	{
 		ArrayList<MachinDataStruct> temp;
 		temp = find_uuid(uuid,major,minor);
-		for(MachinDataStruct a : temp)
+		int i;
+		for(i=1;i<temp.size();i++)
 		{
-			if(a.id.equals(id))
+			if(temp.get(i).id.equals(id))
 			{
 				return true;
 			}

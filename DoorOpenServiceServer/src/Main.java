@@ -11,7 +11,7 @@ import Server.ArduinoServer;
 import Server.UserServer;
 
 public class Main {
-	public static void main(String[] args) {/*
+	public static void main(String[] args) {
 		UserServer userServer = new UserServer(5050);//UserServer ��� ����
 		ArduinoServer arduino = new ArduinoServer(5060);
 		Thread server[] = new Thread[2];
@@ -20,9 +20,9 @@ public class Main {
 		for(Thread p : server)
 		{
 			p.start();
-		}*/
+		}/*
 		ArduinoSend a;
 		a = new ArduinoSend();
-		a.search_bluetooth();
+		a.search_bluetooth();*/
 	}
 }
